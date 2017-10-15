@@ -4,12 +4,14 @@ import java.io.File;
 import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
+import org.junit.AfterClass;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
+import cucumber.api.java.Before;
 import cucumber.api.java.en.Then;
 import cucumber.runtime.ScenarioImpl;
 import env.DriverUtil;
@@ -19,7 +21,7 @@ import info.seleniumcucumber.methods.TestCaseFailed;
 public class PredefinedStepDefinitions implements BaseTest {
 	protected WebDriver driver = DriverUtil.getDefaultDriver();
 	//Navigation Steps
-	
+
 	//Step to navigate to specified URL
 	@Then("^I navigate to \"([^\"]*)\"$")
 	public void navigate_to(String link)
@@ -549,6 +551,7 @@ public class PredefinedStepDefinitions implements BaseTest {
 	
 	@After
 	public final void tearDown() {
+		System.out.println("****************************************tearDown***************************************************************");
 		DriverUtil.closeDriver();
 	}
 }

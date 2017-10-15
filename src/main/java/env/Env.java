@@ -28,6 +28,7 @@ public class Env
 	
 	public static String getBrowserName()
 	{
+		System.out.println("*******************************************************************************************************");
 		browserName = System.getProperty("browser");
 		cloudBrowserConfigFile = System.getProperty("cloud_config");
 		
@@ -98,8 +99,9 @@ public class Env
 	
 	public static WebDriver CreateWebDriver(String browser)
 	{
+		System.out.println("*******************************************************************************************************");
 			System.out.println("Browser: " + browser);
-
+			
 			switch (browser.toLowerCase()) {
 			case "ff":
 			case "firefox":

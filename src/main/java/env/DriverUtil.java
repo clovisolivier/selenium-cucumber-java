@@ -28,8 +28,9 @@ public class DriverUtil {
 		if (driver != null) {
 			return driver;
 		}
-        //System.setProperty("webdriver.chrome.driver", "webdrivers/chromedriver.exe");
-        //System.setProperty("webdriver.gecko.driver", "./geckodriver");
+		System.out.println("*******************************************************************************************************");
+        //System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
+        System.setProperty("webdriver.gecko.driver", "/usr/local/bin/geckodriver");
         DesiredCapabilities capabilities = null;
 		capabilities = DesiredCapabilities.firefox();
         capabilities.setJavascriptEnabled(true);
@@ -51,7 +52,7 @@ public class DriverUtil {
     private static WebDriver chooseDriver(DesiredCapabilities capabilities) {
 		String preferredDriver = System.getProperty("browser", "Firefox");
 		boolean headless = System.getProperty("Headless", "true").equals("true");
-		
+		System.out.println("preferredDriver "+ preferredDriver.toLowerCase());
 		switch (preferredDriver.toLowerCase()) {
 			case "chrome":
 				final ChromeOptions chromeOptions = new ChromeOptions();
@@ -59,15 +60,20 @@ public class DriverUtil {
 					chromeOptions.addArguments("--headless");
 				}
 				capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
-				System.out.println("********************* before driver created");
+				System.out.println("********************* before ChromeDriver created");
 				ChromeDriver driver = new ChromeDriver();
-				System.out.println("********************* after driver created");
+				System.out.println("********************* after ChromeDriver created");
 				ErrorHandler handler = new ErrorHandler();
 				handler.setIncludeServerErrors(false);
 				driver.setErrorHandler(handler);
 				return driver;
 			case "phantomjs":
-				return new PhantomJSDriver(capabilities);
+
+				System.out.println("********************* before phantomJSDriver created");
+				PhantomJSDriver phantomJSDriver = new PhantomJSDriver(capabilities);
+				System.out.println("********************* after phantomJSDriver created");
+				return phantomJSDriver;
+				
 			default:
 				//return new PhantomJSDriver(capabilities);
 				FirefoxOptions options = new FirefoxOptions();
@@ -76,7 +82,9 @@ public class DriverUtil {
 					options.addArguments("-headless", "-safe-mode");
 				}
 				capabilities.setCapability(FirefoxOptions.FIREFOX_OPTIONS, options);
+				System.out.println("********************* before FirefoxDriver created");
 				final FirefoxDriver firefox = new FirefoxDriver();
+				System.out.println("********************* after FirefoxDriver created");
 				return firefox;
 		}
     }
@@ -91,8 +99,11 @@ public class DriverUtil {
 	public static void closeDriver() {
 		if (driver != null) {
 			try {
-				driver.close();
-				driver.quit(); // fails in current geckodriver! TODO: Fixme
+
+				System.out.println("********************* close driver "+ driver);
+				 driver.manage().deleteAllCookies();
+				//driver.close();
+				//driver.quit(); // fails in current geckodriver! TODO: Fixme
 			} catch (NoSuchMethodError nsme) { // in case quit fails
 			} catch (NoSuchSessionException nsse) { // in case close fails
 			} catch (SessionNotCreatedException snce) {} // in case close fails

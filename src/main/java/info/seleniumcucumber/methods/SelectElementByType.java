@@ -7,7 +7,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SelectElementByType 
 {
-	protected WebDriver driver;
+	
+	protected WebDriver driver ;
 	protected WebDriverWait wait;
 	public SelectElementByType() {
 		driver = DriverUtil.getDefaultDriver();

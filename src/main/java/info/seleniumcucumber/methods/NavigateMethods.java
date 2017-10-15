@@ -3,9 +3,12 @@ package info.seleniumcucumber.methods;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import env.DriverUtil;
 
 
 public class NavigateMethods extends SelectElementByType implements BaseTest
@@ -20,7 +23,9 @@ public class NavigateMethods extends SelectElementByType implements BaseTest
 	 */
 	public void navigateTo(String url) 
 	{
+		System.out.println("********************* Before NavigateTo "+ driver);
 		driver.get(url);
+		System.out.println("********************* After NavigateTo ");
 	}
 	
 	/** Method to navigate back & forward
@@ -28,6 +33,7 @@ public class NavigateMethods extends SelectElementByType implements BaseTest
 	 */
 	public void navigate(String direction)
 	{
+		System.out.println("********************* navigate");
 		if (direction.equals("back"))
 			driver.navigate().back();
 		else
@@ -37,6 +43,7 @@ public class NavigateMethods extends SelectElementByType implements BaseTest
 	/** Method to quite webdriver instance */
 	public void closeDriver()
 	{
+		System.out.println("*********************closeDriver");
 		driver.close();
 	}
 	
@@ -45,6 +52,7 @@ public class NavigateMethods extends SelectElementByType implements BaseTest
 	 */
 	public Keys getKey()
 	{
+		System.out.println("*********************getKey");
 		String os = System.getProperty("os.name").toLowerCase();
 		if(os.contains("win"))
 			return Keys.CONTROL;
@@ -61,6 +69,7 @@ public class NavigateMethods extends SelectElementByType implements BaseTest
 	 */
 	public void zoomInOut(String inOut)
 	{
+		System.out.println("*********************zoomInOut");
 		WebElement Sel= driver.findElement(getelementbytype("tagName","html"));
 		if(inOut.equals("ADD"))
 			Sel.sendKeys(Keys.chord(getKey(), Keys.ADD));
@@ -77,6 +86,7 @@ public class NavigateMethods extends SelectElementByType implements BaseTest
 	 */
 	public void zoomInOutTillElementDisplay(String accessType,String inOut,String accessName)
 	{
+		System.out.println("*********************zoomInOutTillElementDisplay");
 		Actions action = new Actions(driver);
 		element = wait.until(ExpectedConditions.presenceOfElementLocated(getelementbytype(accessType, accessName)));
 		while(true)
@@ -94,12 +104,14 @@ public class NavigateMethods extends SelectElementByType implements BaseTest
 	 */
 	public void resizeBrowser(int width, int height)
 	{
+		System.out.println("*********************resizeBrowser");
 		driver.manage().window().setSize(new Dimension(width,height));
 	}
 	
 	/** Method to maximize browser	 */
 	public void maximizeBrowser()
 	{
+		System.out.println("*********************maximizeBrowser");
 		driver.manage().window().maximize();
 	}
 	
@@ -109,6 +121,7 @@ public class NavigateMethods extends SelectElementByType implements BaseTest
 	 */
 	public void hoverOverElement(String accessType, String accessName)
 	{
+		System.out.println("*********************hoverOverElement");
 		Actions action = new Actions(driver);
 		element = wait.until(ExpectedConditions.presenceOfElementLocated(getelementbytype(accessType, accessName)));
 		action.moveToElement(element).perform();
@@ -120,6 +133,7 @@ public class NavigateMethods extends SelectElementByType implements BaseTest
 	 */
 	public void scrollToElement(String accessType, String accessName)
 	{
+		System.out.println("*********************scrollToElement");
 		element = wait.until(ExpectedConditions.presenceOfElementLocated(getelementbytype(accessType, accessName)));
 		JavascriptExecutor executor = (JavascriptExecutor)driver;
 		executor.executeScript("arguments[0].scrollIntoView();", element);
@@ -131,6 +145,7 @@ public class NavigateMethods extends SelectElementByType implements BaseTest
 	 */
 	public void scrollPage(String to) throws Exception
 	{
+		System.out.println("*********************scrollPage");
 		JavascriptExecutor executor = (JavascriptExecutor)driver;
 		if (to.equals("end"))
 			executor.executeScript("window.scrollTo(0,Math.max(document.documentElement.scrollHeight,document.body.scrollHeight,document.documentElement.clientHeight));");
@@ -143,6 +158,7 @@ public class NavigateMethods extends SelectElementByType implements BaseTest
 	/**Method to switch to new window */
     public void switchToNewWindow()
     {
+		System.out.println("*********************switchToNewWindow");
     	old_win = driver.getWindowHandle();
     	for(String winHandle : driver.getWindowHandles())
     		lastWinHandle = winHandle;
@@ -152,6 +168,7 @@ public class NavigateMethods extends SelectElementByType implements BaseTest
     /** Method to switch to old window */
     public void switchToOldWindow()
     {
+		System.out.println("*********************switchToOldWindow");
     	driver.switchTo().window(old_win);
     }
     
@@ -160,6 +177,7 @@ public class NavigateMethods extends SelectElementByType implements BaseTest
      * @throws Exception */
     public void switchToWindowByTitle(String windowTitle) throws Exception
     {
+		System.out.println("*********************switchToWindowByTitle");
     	//System.out.println("++"+windowTitle+"++");
     	old_win = driver.getWindowHandle();
     	boolean winFound = false;
@@ -180,6 +198,7 @@ public class NavigateMethods extends SelectElementByType implements BaseTest
     /**Method to close new window*/
     public void closeNewWindow()
     {
+    	System.out.println("*********************closeNewWindow");
     	driver.close();
     }
     
@@ -189,6 +208,7 @@ public class NavigateMethods extends SelectElementByType implements BaseTest
      * */
     public void switchFrame(String accessType, String accessName)
     {
+    	System.out.println("*********************switchFrame");
     	if(accessType.equalsIgnoreCase("index"))
     		driver.switchTo().frame(accessName);
     	else
@@ -201,6 +221,7 @@ public class NavigateMethods extends SelectElementByType implements BaseTest
     /** method to switch to default content*/
     public void switchToDefaultContent()
     {
+    	System.out.println("*********************switchToDefaultContent");
     	driver.switchTo().defaultContent();
     }
 }
